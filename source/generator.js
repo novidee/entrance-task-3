@@ -129,11 +129,11 @@ function generateSchedules(schedule, devices) {
 function calculateConsumedEnergy(schedule, rates, devices) {
   const devicesConsumption = {};
 
-  WHOLE_DAY_HOURS.forEach(hour => {
+  WHOLE_DAY_HOURS.forEach((hour) => {
     const devicesIds = schedule[hour];
     const hourRate = rates.find(rate => rate.hours.includes(hour)).rate;
 
-    devicesIds.forEach(deviceId => {
+    devicesIds.forEach((deviceId) => {
       const devicePower = devices.find(device => device.id === deviceId).power;
       devicesConsumption[deviceId] = (devicePower / WATTS_IN_KILOWATT * hourRate)
         + (devicesConsumption[deviceId] || 0);
