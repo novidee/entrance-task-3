@@ -17,6 +17,7 @@ const WHOLE_DAY_HOURS = getHourPeriodByBorders(HOURS.wholeDay);
 
 const WATTS_IN_KILOWATT = 1000;
 const MAX_SCHEDULES = 100;
+const CORRECT_RATIO = 2;
 
 function calculateSchedulePrice(schedule, key) {
   return schedule.reduce((info, item) => ({ sum: info.sum + item.price, key }), { sum: 0 });
@@ -53,7 +54,7 @@ function filterCheapSchedules(schedules) {
 
   const cheapScheduleIndexes = chain(schedulesWithPrice)
     .orderBy(['sum'], ['asc'])
-    .take(MAX_SCHEDULES)
+    .take(schedules.length / CORRECT_RATIO)
     .map(item => item.key)
     .value();
 
@@ -189,5 +190,8 @@ function start(data) {
 }
 
 module.exports = {
+  formatHoursRates,
+  groupDevices,
+  getDeviceStartHours,
   start
 };

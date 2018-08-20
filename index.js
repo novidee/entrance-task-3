@@ -1,6 +1,6 @@
-const { generate } = require('./src');
+const start = require('./src');
 const { input } = require('./input');
 
-const output = generate(input);
+const output = start(input);
 
 console.log('output', output);
