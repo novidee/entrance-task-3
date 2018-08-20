@@ -6,8 +6,10 @@ const {
   chain,
   round
 } = require('lodash');
+
 const { getHourPeriodByBorders, getHourPeriodByDuration } = require('./utils');
 const { HOURS, PERIOD } = require('./constants');
+const { validate } = require('./validation/validator');
 
 const DAY_HOURS = getHourPeriodByBorders(HOURS.day);
 const NIGHT_HOURS = getHourPeriodByBorders(HOURS.night);
@@ -154,6 +156,10 @@ function formatScheduleDevices(rawSchedule) {
 }
 
 function start(data) {
+  const errors = validate(data);
+
+  if (errors.length !== 0) return errors.join('\n');
+
   const { rates, devices, maxPower } = data;
   const hoursRates = formatHoursRates(rates);
   const initialSchedule = initSchedule(hoursRates, maxPower);
@@ -165,6 +171,9 @@ function start(data) {
   const schedules = generateSchedules(startSchedule, sorted);
 
   const schedulesWithPrice = schedules.map(calculateSchedulePrice);
+
+  if (schedulesWithPrice.length === 0) return 'Невозможно распределить все устройства';
+
   const cheapestSchedule = sortBy(schedulesWithPrice, 'sum')[0];
 
   const schedule = formatScheduleDevices(schedules[cheapestSchedule.key]);

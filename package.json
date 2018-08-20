@@ -1,12 +1,17 @@
 {
   "name": "entrance-task-3",
   "version": "0.0.1",
+  "scripts": {
+    "build": "webpack --output-library generate --output-library-target commonjs"
+  },
   "dependencies": {
     "lodash": "4.17.10"
   },
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.0.0",
-    "eslint-plugin-import": "2.13.0"
+    "eslint-plugin-import": "2.13.0",
+    "webpack": "4.16.5",
+    "webpack-cli": "3.1.0"
   }
 }

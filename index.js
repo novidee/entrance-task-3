@@ -1,8 +1,6 @@
-const { start } = require('./source/generator');
-const { inputs } = require('./inputs');
-const { validate } = require('./source/validation/validator');
+const { generate } = require('./src');
+const { input } = require('./input');
 
-const errors = validate(inputs[0]);
-// const output = start(inputs[0]);
+const output = generate(input);
 
-console.log('dsad');
+console.log('output', output);
